@@ -5,6 +5,9 @@ import com.amazon.ata.music.playlist.service.exceptions.PlaylistNotFoundExceptio
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 
+import static com.amazon.ata.music.playlist.service.util.MusicPlaylistServiceUtils.generatePlaylistId;
+import static com.amazon.ata.music.playlist.service.util.MusicPlaylistServiceUtils.isValidString;
+
 /**
  * Accesses data for a playlist using {@link Playlist} to represent the model in DynamoDB.
  */
@@ -35,4 +38,14 @@ public class PlaylistDao {
 
         return playlist;
     }
+
+    //m1m2
+    public Playlist savePlaylist(Playlist playlist) {
+        if (isValidString(playlist.getId())) {
+            generatePlaylistId();
+            dynamoDbMapper.save(playlist);
+        }
+        return playlist;
+    }
+
 }
