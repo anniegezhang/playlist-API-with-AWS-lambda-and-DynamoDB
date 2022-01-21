@@ -37,9 +37,10 @@ class PlaylistDao {
 }
 class AlbumTrackNotFoundException {}
 class InvalidAttributeValueException {}
+class InvalidAttributeChangeException {}
 class PlaylistNotFoundException {}
 class MusicPlaylistServiceUtils {}
-
+class InvalidAttributeException {}
 
 Playlist -> AlbumTrack
 AddSongToPlaylistActivity -> AlbumTrackDao
@@ -51,6 +52,8 @@ UpdatePlaylistActivity -> PlaylistDao
 MusicPlaylistServiceUtils -> AlbumTrackDao
 generatePlaylistId -> PlaylistDao
 savePlaylist -> PlaylistDao
+InvalidAttributeException <|-- InvalidAttributeValueException
+InvalidAttributeException <|-- InvalidAttributeChangeException
 
 
 @enduml
