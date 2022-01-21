@@ -21,6 +21,7 @@ public class MT2DesignIntrospectionTests {
     private static final String CLASS_DIAGRAM_PATH = "mastery-task1-music-playlist-CD.puml";
 
     private String content;
+    
 
     @BeforeEach
     public void setup() {
