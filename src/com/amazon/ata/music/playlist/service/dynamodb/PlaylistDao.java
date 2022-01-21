@@ -41,10 +41,7 @@ public class PlaylistDao {
 
     //m1m2
     public Playlist savePlaylist(Playlist playlist) {
-        if (isValidString(playlist.getId())) {
-            generatePlaylistId();
-            dynamoDbMapper.save(playlist);
-        }
+        this.dynamoDbMapper.save(playlist);
         return playlist;
     }
 

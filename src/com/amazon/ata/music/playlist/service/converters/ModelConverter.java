@@ -4,7 +4,9 @@ import com.amazon.ata.music.playlist.service.models.PlaylistModel;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ModelConverter {
     /**
@@ -13,7 +15,21 @@ public class ModelConverter {
      * @return the converted playlist
      */
     public PlaylistModel toPlaylistModel(Playlist playlist) {
-        if (playlist.getTags() == null) {
+        Set tagSet = playlist.getTags();
+        List<String> tagList = null;
+        if (tagSet != null) {
+            tagList = new ArrayList<>(tagSet);
+        }
+
+        return PlaylistModel.builder()
+                .withId(playlist.getId())
+                .withCustomerId(playlist.getCustomerId())
+                .withName(playlist.getName())
+                .withTags(tagList)
+                .withSongCount(playlist.getSongCount())
+                .build();
+
+        /*if (playlist.getTags() == null) {
             return PlaylistModel.builder()
                     .withId(playlist.getId())
                     .withName(playlist.getName())
@@ -34,6 +50,6 @@ public class ModelConverter {
                     .withTags(listVersion)
                     .withSongCount(playlist.getSongCount())
                     .build();
-        }
+        }*/
     }
 }
