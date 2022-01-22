@@ -75,9 +75,9 @@ public class UpdatePlaylistActivity implements RequestHandler<UpdatePlaylistRequ
         Playlist to_update_playlist = this.playlistDao.getPlaylist(newId);
         String expected_id = to_update_playlist.getCustomerId();
 
-        if (expected_id != newCustomerId) {
-            throw new InvalidAttributeChangeException("The customerId provided does not match the id for " +
-                    "this playlist in our database");
+        if (!expected_id.equals(newCustomerId) ) {
+            throw new InvalidAttributeChangeException("The customerId " + newCustomerId +  " provided does not match the id " + expected_id +
+                    " this playlist in our database");
         }
 
         to_update_playlist.setName(newName);

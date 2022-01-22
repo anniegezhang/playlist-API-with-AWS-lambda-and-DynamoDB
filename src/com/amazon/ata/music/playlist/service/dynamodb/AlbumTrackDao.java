@@ -24,9 +24,9 @@ public class AlbumTrackDao {
 
     //m3
     public AlbumTrack getAlbumTrack(String asin, Integer track_number) {
-        AlbumTrack albumTrack = this.dynamoDbMapper.load(AlbumTrack.class, asin);
+        AlbumTrack albumTrack = this.dynamoDbMapper.load(AlbumTrack.class, asin, track_number);
 
-        if (albumTrack == null || albumTrack.getTrack_number() == null) {
+        if (albumTrack == null ) {
             throw new AlbumTrackNotFoundException("The album doesnot exist for the ASIN provided " +
                     "or the track number does not exist for the ASIN provided");
         }

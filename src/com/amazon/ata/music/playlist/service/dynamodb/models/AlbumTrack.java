@@ -29,6 +29,8 @@ public class AlbumTrack {
     public void setAsin(String asin) {
         this.asin = asin;
     }
+
+
     @DynamoDBRangeKey(attributeName = "track_number")
     public Integer getTrack_number() {
         return track_number;
