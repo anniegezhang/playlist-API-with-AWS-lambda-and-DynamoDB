@@ -71,6 +71,10 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
             Collections.reverse(returnSongList);
         }
 
+        if (getPlaylistSongsRequest.getOrder() != null && getPlaylistSongsRequest.getOrder().equals(SongOrder.SHUFFLED)) {
+            Collections.shuffle(returnSongList);
+        }
+
 
         return GetPlaylistSongsResult.builder()
                 .withSongList(returnSongList)
