@@ -1,6 +1,12 @@
 package com.amazon.ata.music.playlist.service.activity;
 
+import com.amazon.ata.music.playlist.service.converters.ModelConverter;
+import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
+import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
+import com.amazon.ata.music.playlist.service.models.PlaylistModel;
+import com.amazon.ata.music.playlist.service.models.SongOrder;
 import com.amazon.ata.music.playlist.service.models.requests.GetPlaylistSongsRequest;
+import com.amazon.ata.music.playlist.service.models.results.AddSongToPlaylistResult;
 import com.amazon.ata.music.playlist.service.models.results.GetPlaylistSongsResult;
 import com.amazon.ata.music.playlist.service.models.SongModel;
 import com.amazon.ata.music.playlist.service.dynamodb.PlaylistDao;
@@ -10,7 +16,9 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 /**
  * Implementation of the GetPlaylistSongsActivity for the MusicPlaylistService's GetPlaylistSongs API.
@@ -44,8 +52,34 @@ public class GetPlaylistSongsActivity implements RequestHandler<GetPlaylistSongs
     public GetPlaylistSongsResult handleRequest(final GetPlaylistSongsRequest getPlaylistSongsRequest, Context context) {
         log.info("Received GetPlaylistSongsRequest {}", getPlaylistSongsRequest);
 
+        //m3m2
+        // load the playlist
+
+        String requestedId = getPlaylistSongsRequest.getId();
+        Playlist playlist = playlistDao.getPlaylist(requestedId);
+        List<AlbumTrack> songList = playlist.getSongList();
+
+        //convert songlist to a list of SongModel
+        ModelConverter modelConverter = new ModelConverter();
+        List<SongModel> returnSongList = new ArrayList<>();
+        for (AlbumTrack albumTrack : songList) {
+            SongModel songModel = modelConverter.toSongModel(albumTrack);
+            returnSongList.add(songModel);
+        }
+
+        if (getPlaylistSongsRequest.getOrder() != null && getPlaylistSongsRequest.getOrder().equals(SongOrder.REVERSED)) {
+            Collections.reverse(returnSongList);
+        }
+
+
+        return GetPlaylistSongsResult.builder()
+                .withSongList(returnSongList)
+                .build();
+
+
+/*
         return GetPlaylistSongsResult.builder()
                 .withSongList(Collections.singletonList(new SongModel()))
-                .build();
+                .build();*/
     }
 }
