@@ -1,7 +1,9 @@
 package com.amazon.ata.music.playlist.service.converters;
 
+import com.amazon.ata.music.playlist.service.dynamodb.models.AlbumTrack;
 import com.amazon.ata.music.playlist.service.models.PlaylistModel;
 import com.amazon.ata.music.playlist.service.dynamodb.models.Playlist;
+import com.amazon.ata.music.playlist.service.models.SongModel;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -51,5 +53,15 @@ public class ModelConverter {
                     .withSongCount(playlist.getSongCount())
                     .build();
         }*/
+    }
+
+    public SongModel toSongModel(AlbumTrack albumTrack) {
+
+        return SongModel.builder()
+                .withAsin(albumTrack.getAsin())
+                .withTrackNumber(albumTrack.getTrack_number())
+                .withAlbum(albumTrack.getAlbum_name())
+                .withTitle(albumTrack.getSong_title())
+                .build();
     }
 }
