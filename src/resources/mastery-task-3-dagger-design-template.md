@@ -5,8 +5,13 @@
 Looking through `App.java` and your class diagram, identify:
 
 1. Which classes should be returned from the Dagger component
-1. Which classes have constructors that should be annotated with `@Inject`
-1. Which objects will we have to provide in a Provider method in a Module class.
+   provideCreatePlaylistActivity()
+
+
+
+
+2. Which classes have constructors that should be annotated with `@Inject`
+3. Which objects will we have to provide in a Provider method in a Module class.
    **Recall**: *Java annotations are ways to provide additional information
    to code that can be used during compilation or runtime, such as `@Override`,
    `@Test`, or `@Mock`. The action of adding an annotation is called "annotating".*
